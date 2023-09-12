@@ -16,5 +16,11 @@ namespace TpIntegradorSofttek.Repositories
         {
             return await _context.Set<T>().ToListAsync();
         }
+
+        public virtual async Task<bool> Insert(T entity)
+        {
+            await _context.Set<T>().AddAsync(entity);
+            return true;
+        }
     }
 }

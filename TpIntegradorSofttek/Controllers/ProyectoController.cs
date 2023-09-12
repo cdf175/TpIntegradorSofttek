@@ -7,11 +7,11 @@ namespace TpIntegradorSofttek.Controllers
     public class ProyectoController : ControllerBase
     {
         // GET: api/<ProyectosController>
-        [HttpGet]
-        public IActionResult Get()
-        {
-            return Ok();
-        }
+        //[HttpGet]
+        //public IActionResult Get()
+        //{
+        //    return Ok();
+        //}
 
        
     }

@@ -7,11 +7,11 @@ namespace TpIntegradorSofttek.Controllers
     public class TrabajoController : ControllerBase
     {
         // GET: TrabajosController
-        [HttpGet]
-        public IActionResult Get()
-        {
-            return Ok();
-        }
+        //[HttpGet]
+        //public IActionResult Get()
+        //{
+        //    return Ok();
+        //}
 
     }
 }

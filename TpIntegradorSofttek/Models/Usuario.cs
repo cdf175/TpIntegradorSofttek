@@ -1,7 +1,24 @@
-﻿namespace TpIntegradorSofttek.Models
+﻿using TpIntegradorSofttek.DTOs;
+
+namespace TpIntegradorSofttek.Models
 {
     public class Usuario
     {
+        public Usuario()
+        {
+
+        }
+        public Usuario(RegisterDto dto)
+        {
+            Nombre = dto.Nombre;
+            Dni = dto.Dni;
+            Tipo = dto.Tipo;
+            Email = dto.Email;
+            Clave = dto.Clave;
+
+        }
+        
+
         public int Id { get; set; }
         public string Nombre { get; set; }
         public  int Dni { get; set; }

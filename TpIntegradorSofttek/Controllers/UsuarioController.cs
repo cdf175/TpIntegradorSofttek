@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using TpIntegradorSofttek.DTOs;
 using TpIntegradorSofttek.Models;
 using TpIntegradorSofttek.Services;
 
@@ -16,10 +18,22 @@ namespace TpIntegradorSofttek.Controllers
 
         
         [HttpGet]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<Usuario>>> GetAll()
         {
             var users = await _unityOfWork.UsuarioRepository.GetAll();
             return Ok(users);
+        }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> Register(RegisterDto dto)
+        {
+            var user = new Usuario(dto);
+            await _unityOfWork.UsuarioRepository.Insert(user);
+            await _unityOfWork.Complete();
+
+            return Ok("Usuario registrado correctamente");
         }
 
     }
