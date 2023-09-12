@@ -4,14 +4,14 @@ namespace TpIntegradorSofttek.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TrabajosController : ControllerBase
+    public class TrabajoController : ControllerBase
     {
         // GET: TrabajosController
-        [HttpGet]
-        public IActionResult Get()
-        {
-            return Ok();
-        }
+        //[HttpGet]
+        //public IActionResult Get()
+        //{
+        //    return Ok();
+        //}
 
     }
 }
