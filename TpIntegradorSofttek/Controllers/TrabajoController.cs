@@ -4,9 +4,9 @@ namespace TpIntegradorSofttek.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UsuariosController : ControllerBase
+    public class TrabajoController : ControllerBase
     {
-        // GET: UsuarioController
+        // GET: TrabajosController
         [HttpGet]
         public IActionResult Get()
         {

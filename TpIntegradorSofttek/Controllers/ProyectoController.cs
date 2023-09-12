@@ -4,7 +4,7 @@ namespace TpIntegradorSofttek.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProyectosController : ControllerBase
+    public class ProyectoController : ControllerBase
     {
         // GET: api/<ProyectosController>
         [HttpGet]
