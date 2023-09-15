@@ -14,7 +14,7 @@ namespace TpIntegradorSofttek.DataAcces.Configurations
             builder.Property(p => p.Nombre).IsRequired().HasColumnType("varchar").HasMaxLength(200);
             builder.Property(p => p.Dni).IsRequired();
             builder.Property(p => p.Tipo);
-            builder.Property(p => p.Clave).HasColumnType("varchar").HasMaxLength(50);
+            builder.Property(p => p.Clave).HasColumnName("Contrasena").HasColumnType("varchar").HasMaxLength(250);
             builder.Property(p => p.Email).IsRequired().HasColumnType("varchar").HasMaxLength(100);
             builder.Property(p => p.FechaBaja).HasColumnType("datetime");
         }

@@ -1,4 +1,5 @@
 ﻿using TpIntegradorSofttek.DTOs;
+using TpIntegradorSofttek.Helpers;
 
 namespace TpIntegradorSofttek.Models
 {
@@ -14,10 +15,19 @@ namespace TpIntegradorSofttek.Models
             Dni = dto.Dni;
             Tipo = dto.Tipo;
             Email = dto.Email;
-            Clave = dto.Clave;
+            Clave = PasswordEncryptHelper.EncriptPassword(dto.Clave);
 
         }
-        
+        public Usuario(RegisterDto dto, int id)
+        {
+            Id = id;
+            Nombre = dto.Nombre;
+            Dni = dto.Dni;
+            Tipo = dto.Tipo;
+            Email = dto.Email;
+            Clave = PasswordEncryptHelper.EncriptPassword(dto.Clave);
+
+        }
 
         public int Id { get; set; }
         public string Nombre { get; set; }
