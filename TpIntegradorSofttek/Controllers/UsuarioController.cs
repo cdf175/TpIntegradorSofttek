@@ -16,7 +16,7 @@ namespace TpIntegradorSofttek.Controllers
             _unityOfWork = unitOfWork;
         }
 
-        
+
         [HttpGet]
         [Authorize]
         public async Task<ActionResult<IEnumerable<Usuario>>> GetAll()
@@ -25,16 +25,60 @@ namespace TpIntegradorSofttek.Controllers
             return Ok(users);
         }
 
-        [HttpPost]
+        [HttpGet("{id}")]
         [Authorize]
+        public async Task<ActionResult<Usuario>> GetById(int id)
+        {
+            var user = await _unityOfWork.UsuarioRepository.GetById(id);
+            return Ok(user);
+        }
+
+        [HttpPost]
+        [Authorize(Policy = "Admin")]
+        [Route("Register")]
         public async Task<IActionResult> Register(RegisterDto dto)
         {
             var user = new Usuario(dto);
-            await _unityOfWork.UsuarioRepository.Insert(user);
+            bool success = await _unityOfWork.UsuarioRepository.Insert(user);
+            if (!success) return BadRequest("No se pudo completar la operación");
+
             await _unityOfWork.Complete();
 
             return Ok("Usuario registrado correctamente");
         }
+
+        [HttpPut]
+        [Authorize(Policy = "Admin")]
+        [Route("Update/{id}")]
+        public async Task<IActionResult> Update(int id,RegisterDto dto)
+        {
+            var user = new Usuario(dto, id);
+
+            bool success = await _unityOfWork.UsuarioRepository.Update(user);
+            if (!success) return BadRequest("No se pudo completar la operación");
+
+
+            await _unityOfWork.Complete();
+
+            return Ok("Usuario actualizado correctamente");
+        }
+
+        [HttpDelete]
+        [Authorize(Policy = "Admin")]
+        [Route("Delete/{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            bool success = await _unityOfWork.UsuarioRepository.Delete(id);
+
+            if (!success) return BadRequest("No se pudo completar la operación");
+
+            await _unityOfWork.Complete();
+
+            return Ok("El usuario se ha dado de baja.");
+        }
+
+
+
 
     }
 }

@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using TpIntegradorSofttek.DataAcces;
 using TpIntegradorSofttek.Services;
+using System.Security.Claims;
+using TpIntegradorSofttek.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +18,10 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
     options.UseSqlServer("name=DefaultConection");
+});
+
+builder.Services.AddAuthorization( option => {
+    option.AddPolicy("Admin", policy => policy.RequireClaim(ClaimTypes.Role, ((int)Roles.Administrador).ToString()));
 });
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
