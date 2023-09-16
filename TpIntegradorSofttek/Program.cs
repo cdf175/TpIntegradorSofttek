@@ -21,7 +21,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 });
 
 builder.Services.AddAuthorization( option => {
-    option.AddPolicy("Admin", policy => policy.RequireClaim(ClaimTypes.Role, ((int)Roles.Administrador).ToString()));
+    option.AddPolicy("Admin", policy => policy.RequireClaim(ClaimTypes.Role, ((int)Roles.Administrator).ToString()));
 });
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

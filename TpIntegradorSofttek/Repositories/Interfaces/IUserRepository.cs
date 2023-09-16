@@ -2,7 +2,7 @@
 
 namespace TpIntegradorSofttek.Repositories.Interfaces
 {
-    public interface IUsuarioRepository : IRepository<Usuario>
+    public interface IUserRepository : IRepository<User>
     {
     }
 }

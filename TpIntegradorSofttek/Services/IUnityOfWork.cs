@@ -4,7 +4,7 @@ namespace TpIntegradorSofttek.Services
 {
     public interface IUnitOfWork : IDisposable
     {
-        public UsuarioRepository UsuarioRepository { get; }
+        public UserRepository UserRepository { get; }
         Task<int> Complete();
 
     }

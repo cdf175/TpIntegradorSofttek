@@ -2,11 +2,11 @@
 
 namespace TpIntegradorSofttek.DTOs
 {
-    public class UsuarioLoginDto
+    public class UserLoginDto
     {
-        public string Nombre { get; set; }
+        public string Name { get; set; }
         public int Dni { get; set; }
-        public Roles Tipo { get; set; }
+        public Roles Type { get; set; }
         public string Email { get; set; }
         public string Token { get; set; }
     }
