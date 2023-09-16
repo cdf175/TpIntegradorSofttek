@@ -8,10 +8,10 @@ namespace TpIntegradorSofttek.DataAcces
 {
     public class ApplicationDbContext:DbContext
     {
-        public DbSet<Usuario> Usuarios { get; set; }
-        public DataSet Proyectos { get; set; }
-        public DataSet Servicios { get; set; }
-        public DataSet Trabajos { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DataSet Proyects { get; set; }
+        public DataSet Services { get; set; }
+        public DataSet Works { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options):base(options){}
 
@@ -19,21 +19,21 @@ namespace TpIntegradorSofttek.DataAcces
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //Configuracion con Fluent API
-            modelBuilder.ApplyConfiguration(new UsuarioConfiguration());
+            modelBuilder.ApplyConfiguration(new UserConfiguration());
             //seed de tabla usuario
-            var usuarioSeeder = new UsuarioSeeder();
+            var usuarioSeeder = new UserSeeder();
             usuarioSeeder.SeedDataBase(modelBuilder);
 
-            modelBuilder.ApplyConfiguration(new ServicioConfiguration());
-            var servicioSeeder = new ServicioSeeder();
+            modelBuilder.ApplyConfiguration(new ServiceConfiguration());
+            var servicioSeeder = new ServiceSeeder();
             servicioSeeder.SeedDataBase(modelBuilder);
            
-            modelBuilder.ApplyConfiguration(new ProyectoConfiguration());
-            var proyectoSeeder = new ProyectoSeeder();
+            modelBuilder.ApplyConfiguration(new ProyectConfiguration());
+            var proyectoSeeder = new ProyectSeeder();
             proyectoSeeder.SeedDataBase(modelBuilder);
 
-            modelBuilder.ApplyConfiguration(new TrabajoConfiguration());
-            var trabajoSeeder = new TrabajoSeeder();
+            modelBuilder.ApplyConfiguration(new WorkConfiguration());
+            var trabajoSeeder = new WorkSeeder();
             trabajoSeeder.SeedDataBase(modelBuilder);
    
 

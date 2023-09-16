@@ -4,10 +4,10 @@ namespace TpIntegradorSofttek.DTOs
 {
     public class RegisterDto
     {
-        public string Nombre { get; set; }
-        public Roles Tipo { get; set; }
+        public string Name { get; set; }
+        public Roles Type { get; set; }
         public int Dni { get; set; }
         public string Email { get; set; }
-        public string Clave { get; set; }
+        public string Password { get; set; }
     }
 }

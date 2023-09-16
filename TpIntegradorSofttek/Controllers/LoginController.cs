@@ -22,7 +22,7 @@ namespace TpIntegradorSofttek.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(AuthenticateDto dto)
         {
-            var userCredentials = await _unitOfWork.UsuarioRepository.AuthenticateCredentials(dto);
+            var userCredentials = await _unitOfWork.UserRepository.AuthenticateCredentials(dto);
 
             if (userCredentials is null)
             {
@@ -31,11 +31,11 @@ namespace TpIntegradorSofttek.Controllers
 
             var token = _tokenJwtHelper.GenerateToken(userCredentials);
 
-            var user = new UsuarioLoginDto()
+            var user = new UserLoginDto()
             {
-                Nombre = userCredentials.Nombre,
+                Name = userCredentials.Name,
                 Dni = userCredentials.Dni,
-                Tipo = userCredentials.Tipo,
+                Type = userCredentials.Type,
                 Email = userCredentials.Email,
                 Token = token
             };

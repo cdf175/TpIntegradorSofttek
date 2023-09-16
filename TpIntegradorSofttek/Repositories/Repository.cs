@@ -39,7 +39,7 @@ namespace TpIntegradorSofttek.Repositories
 
             if (entity == null) return false;
 
-            PropertyInfo? propertyInfo = entity.GetType().GetProperty("FechaBaja");
+            PropertyInfo? propertyInfo = entity.GetType().GetProperty("EndDate");
 
             if (propertyInfo == null) return false;
 

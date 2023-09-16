@@ -8,10 +8,10 @@ namespace TpIntegradorSofttek.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UsuarioController : ControllerBase
+    public class UserController : ControllerBase
     {
         private readonly IUnitOfWork _unityOfWork;
-        public UsuarioController(IUnitOfWork unitOfWork)
+        public UserController(IUnitOfWork unitOfWork)
         {
             _unityOfWork = unitOfWork;
         }
@@ -19,32 +19,32 @@ namespace TpIntegradorSofttek.Controllers
 
         [HttpGet]
         [Authorize]
-        public async Task<ActionResult<IEnumerable<Usuario>>> GetAll()
+        public async Task<ActionResult<IEnumerable<User>>> GetAll()
         {
-            var users = await _unityOfWork.UsuarioRepository.GetAll();
+            var users = await _unityOfWork.UserRepository.GetAll();
             return Ok(users);
         }
 
         [HttpGet("{id}")]
         [Authorize]
-        public async Task<ActionResult<Usuario>> GetById(int id)
+        public async Task<ActionResult<User>> GetById(int id)
         {
-            var user = await _unityOfWork.UsuarioRepository.GetById(id);
+            var user = await _unityOfWork.UserRepository.GetById(id);
             return Ok(user);
         }
 
         [HttpPost]
         [Authorize(Policy = "Admin")]
-        [Route("Register")]
-        public async Task<IActionResult> Register(RegisterDto dto)
+        [Route("Create")]
+        public async Task<IActionResult> Create(RegisterDto dto)
         {
-            var user = new Usuario(dto);
-            bool success = await _unityOfWork.UsuarioRepository.Insert(user);
+            var user = new User(dto);
+            bool success = await _unityOfWork.UserRepository.Insert(user);
             if (!success) return BadRequest("No se pudo completar la operación");
 
             await _unityOfWork.Complete();
 
-            return Ok("Usuario registrado correctamente");
+            return Ok("Usuario creado correctamente");
         }
 
         [HttpPut]
@@ -52,9 +52,9 @@ namespace TpIntegradorSofttek.Controllers
         [Route("Update/{id}")]
         public async Task<IActionResult> Update(int id,RegisterDto dto)
         {
-            var user = new Usuario(dto, id);
+            var user = new User(dto, id);
 
-            bool success = await _unityOfWork.UsuarioRepository.Update(user);
+            bool success = await _unityOfWork.UserRepository.Update(user);
             if (!success) return BadRequest("No se pudo completar la operación");
 
 
@@ -68,7 +68,7 @@ namespace TpIntegradorSofttek.Controllers
         [Route("Delete/{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            bool success = await _unityOfWork.UsuarioRepository.Delete(id);
+            bool success = await _unityOfWork.UserRepository.Delete(id);
 
             if (!success) return BadRequest("No se pudo completar la operación");
 
