@@ -44,5 +44,15 @@ namespace TpIntegradorSofttek.Repositories
             return await _context.Users.SingleOrDefaultAsync(x => x.Email == dto.Email && x.Password == PasswordEncryptHelper.EncriptPassword(dto.Password));
         }
 
+        public async Task<bool> EmailExist(string email)
+        {
+            return _context.Users.Any(p => p.Email == email);
+        }
+        public async Task<bool> EmailUpdateExist(string email,int id)
+        {
+            var user = await _context.Users.SingleOrDefaultAsync(p => p.Id == id);
+            return _context.Users.Any(p => p.Email == email && user!.Email != email);
+        }
+
     }
 }

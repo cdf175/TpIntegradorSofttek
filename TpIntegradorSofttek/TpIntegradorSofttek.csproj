@@ -4,6 +4,8 @@
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <DocumentationFile>D:\Workspace\Bootcamp Softtek\TpIntegrador\TpIntegradorSofttek\TpIntegradorSofttek\bin\Debug\net6.0\TpIntegradorSofttek.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
