@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.Headers;
 using Microsoft.AspNetCore.Mvc;
 using TpIntegradorSofttek.DTOs;
+using TpIntegradorSofttek.Helpers;
 using TpIntegradorSofttek.Infrastructure;
 using TpIntegradorSofttek.Models;
 using TpIntegradorSofttek.Services;
@@ -8,7 +10,7 @@ using TpIntegradorSofttek.Services;
 namespace TpIntegradorSofttek.Controllers
 {
     /// <summary>
-    /// Esta clase controla las acciones y la lógica relacionada con la gestión de usuarios en la aplicación.
+    /// Esta clase controla las acciones y la lógica relacionada con la gestión de usuarios.
     /// Proporciona métodos para crear, actualizar, eliminar y consultar usuarios.
     /// </summary>
     [Route("api/[controller]")]
@@ -24,20 +26,34 @@ namespace TpIntegradorSofttek.Controllers
         {
             _unityOfWork = unitOfWork;
         }
-        
+
         /// <summary>
         /// Obtiene listado de todos los usuarios activos.
         /// </summary>
         /// <returns>Retorna coleccion de usuarios.</returns>
         /// <response code = "200" > Retorna una coleccion de usuarios.</response>
+        /// <response code = "201" > Retorna un paginado en caso de enviar número de pagina.</response>
         [HttpGet]
         [Authorize(Policy = "Consult")]
         [ProducesResponseType(typeof(ApiSuccessResponse<User>), 200)]
+        [ProducesResponseType(typeof(PaginateDataDto<User>), 201)]
         public async Task<IActionResult> GetAll()
         {
             var users = await _unityOfWork.UserRepository.GetAll();
 
-            return ResponseFactory.CreateSuccessResponse(201,users);
+            //Paginado
+            if (Request.Query.ContainsKey("page"))
+            {
+                int pageToShow = 1;
+                int pageSize = 10;
+                int.TryParse(Request.Query["page"], out pageToShow);
+                if (Request.Query.ContainsKey("pageSize")) int.TryParse(Request.Query["pageSize"], out pageSize);
+                var url = new Uri($"{Request.Scheme}://{Request.Host}{Request.Path}").ToString();
+                var paginateUsers = PaginateHelper.Paginate(users, pageToShow, url, pageSize);
+                return ResponseFactory.CreateSuccessResponse(201, paginateUsers);
+            }
+
+            return ResponseFactory.CreateSuccessResponse(200, users);
         }
 
         /// <summary>
