@@ -47,7 +47,9 @@ namespace TpIntegradorSofttek.Controllers
                 int pageToShow = 1;
                 int pageSize = 10;
                 int.TryParse(Request.Query["page"], out pageToShow);
+                if (pageToShow < 1) return ResponseFactory.CreateErrorResponse(409, "'page' debe ser un número mayor o igual a 1.");
                 if (Request.Query.ContainsKey("pageSize")) int.TryParse(Request.Query["pageSize"], out pageSize);
+                if (pageSize < 1) return ResponseFactory.CreateErrorResponse(409, "'pageSize' debe ser un número mayor o igual a 1.");
                 var url = new Uri($"{Request.Scheme}://{Request.Host}{Request.Path}").ToString();
                 var paginateUsers = PaginateHelper.Paginate(users, pageToShow, url, pageSize);
                 return ResponseFactory.CreateSuccessResponse(201, paginateUsers);
@@ -68,7 +70,7 @@ namespace TpIntegradorSofttek.Controllers
         public async Task<IActionResult> GetById(int id)
         {
             var user = await _unityOfWork.UserRepository.GetById(id);
-            var dto = new UserResponseDto()
+            var dto = new UserDto()
             {
                 Id = id,
                 Name = user.Name,
@@ -152,7 +154,7 @@ namespace TpIntegradorSofttek.Controllers
 
             await _unityOfWork.Complete();
 
-            return ResponseFactory.CreateSuccessResponse(200, "El usuario se ha dado de baja con exito.");
+            return ResponseFactory.CreateSuccessResponse(200, "El usuario se ha dado de baja con éxito.");
 
         }
 

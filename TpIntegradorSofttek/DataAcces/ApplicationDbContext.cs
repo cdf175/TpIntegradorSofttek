@@ -1,4 +1,5 @@
-﻿using System.Data;
+﻿using System.Collections.Generic;
+using System.Data;
 using Microsoft.EntityFrameworkCore;
 using TpIntegradorSofttek.DataAcces.Configurations;
 using TpIntegradorSofttek.DataAcces.Seeds;
@@ -9,9 +10,9 @@ namespace TpIntegradorSofttek.DataAcces
     public class ApplicationDbContext:DbContext
     {
         public DbSet<User> Users { get; set; }
-        public DataSet Proyects { get; set; }
-        public DataSet Services { get; set; }
-        public DataSet Works { get; set; }
+        public DbSet<Proyect> Proyects { get; set; }
+        public DbSet<Service> Services { get; set; }
+        public DbSet<Work> Works { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options):base(options){}
 
