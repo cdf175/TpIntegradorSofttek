@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TpIntegradorSofttek.DataAcces;
+using TpIntegradorSofttek.DTOs;
 using TpIntegradorSofttek.Models;
 using TpIntegradorSofttek.Repositories.Interfaces;
 
@@ -12,6 +13,10 @@ namespace TpIntegradorSofttek.Repositories
         public override async Task<List<Proyect>> GetAll()
         {
             return await _context.Set<Proyect>().Where(p => p.EndDate == null).ToListAsync();
+        }
+        public async Task<List<Proyect>> GetAll(ProyectFilterDto dtoFilter)
+        {
+            return await _context.Set<Proyect>().Where(p => p.EndDate == null && p.State == dtoFilter.State).ToListAsync();
         }
 
         public override async Task<Proyect> GetById(int id)
