@@ -23,7 +23,7 @@ namespace TpIntegradorSofttek.Controllers
         }
 
         /// <summary>
-        /// Obtiene listado de todos los proyectos activos.
+        /// Obtiene listado de todos los proyectos.
         /// </summary>
         /// <returns>Retorna coleccion de proyectos.</returns>
         /// <response code = "200" > Retorna una coleccion de proyectos.</response>
@@ -43,6 +43,38 @@ namespace TpIntegradorSofttek.Controllers
                 int pageSize = 10;
                 int.TryParse(Request.Query["page"], out pageToShow);
                 if (pageToShow < 1 ) return ResponseFactory.CreateErrorResponse(409, "'page' debe ser un número mayor o igual a 1.");
+                if (Request.Query.ContainsKey("pageSize")) int.TryParse(Request.Query["pageSize"], out pageSize);
+                if (pageSize < 1) return ResponseFactory.CreateErrorResponse(409, "'pageSize' debe ser un número mayor o igual a 1.");
+                var url = new Uri($"{Request.Scheme}://{Request.Host}{Request.Path}").ToString();
+                var paginateProyects = PaginateHelper.Paginate(proyects, pageToShow, url, pageSize);
+                return ResponseFactory.CreateSuccessResponse(201, paginateProyects);
+            }
+
+            return ResponseFactory.CreateSuccessResponse(200, proyects);
+        }
+
+        /// <summary>
+        /// Obtiene listado de todos los proyectos filtrando por estado.
+        /// </summary>
+        /// <param name="dtoFilter"> Estado </param>
+        /// <returns></returns>
+        [HttpGet]
+        [Authorize(Policy = "Consult")]
+        [Route("Filter")]
+        [ProducesResponseType(typeof(ApiSuccessResponse<Proyect>), 200)]
+        [ProducesResponseType(typeof(PaginateDataDto<Proyect>), 201)]
+        public async Task<IActionResult> GetAllFilter(ProyectFilterDto dtoFilter)
+        {
+           
+            var proyects = await _unityOfWork.ProyectRepository.GetAll(dtoFilter);
+
+            //Paginado
+            if (Request.Query.ContainsKey("page"))
+            {
+                int pageToShow;
+                int pageSize = 10;
+                int.TryParse(Request.Query["page"], out pageToShow);
+                if (pageToShow < 1) return ResponseFactory.CreateErrorResponse(409, "'page' debe ser un número mayor o igual a 1.");
                 if (Request.Query.ContainsKey("pageSize")) int.TryParse(Request.Query["pageSize"], out pageSize);
                 if (pageSize < 1) return ResponseFactory.CreateErrorResponse(409, "'pageSize' debe ser un número mayor o igual a 1.");
                 var url = new Uri($"{Request.Scheme}://{Request.Host}{Request.Path}").ToString();

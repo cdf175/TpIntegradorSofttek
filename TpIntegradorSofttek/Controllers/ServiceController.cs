@@ -25,7 +25,7 @@ namespace TpIntegradorSofttek.Controllers
         }
 
         /// <summary>
-        /// Obtiene listado de todos los servicios activos.
+        /// Obtiene listado de todos los servicios.
         /// </summary>
         /// <returns>Retorna coleccion de servicios.</returns>
         /// <response code = "200" > Retorna una coleccion de servicios.</response>
@@ -55,6 +55,36 @@ namespace TpIntegradorSofttek.Controllers
             return ResponseFactory.CreateSuccessResponse(200, services);
         }
 
+        /// <summary>
+        /// Obtiene listado de todos los servicios filtrandolo por el estado.
+        /// </summary>
+        /// <param name="dtoFilter"> Estado</param>
+        /// <returns></returns>
+        [HttpGet]
+        [Authorize(Policy = "Consult")]
+        [Route("Filter")]
+        [ProducesResponseType(typeof(ApiSuccessResponse<Service>), 200)]
+        [ProducesResponseType(typeof(PaginateDataDto<Service>), 201)]
+        public async Task<IActionResult> GetAllFilter(ServiceFilterDto dtoFilter)
+        {
+            var services = await _unityOfWork.ServiceRepository.GetAll(dtoFilter);
+
+            //Paginado
+            if (Request.Query.ContainsKey("page"))
+            {
+                int pageToShow = 1;
+                int pageSize = 10;
+                int.TryParse(Request.Query["page"], out pageToShow);
+                if (pageToShow < 1) return ResponseFactory.CreateErrorResponse(409, "'page' debe ser un número mayor o igual a 1.");
+                if (Request.Query.ContainsKey("pageSize")) int.TryParse(Request.Query["pageSize"], out pageSize);
+                if (pageSize < 1) return ResponseFactory.CreateErrorResponse(409, "'pageSize' debe ser un número mayor o igual a 1.");
+                var url = new Uri($"{Request.Scheme}://{Request.Host}{Request.Path}").ToString();
+                var paginateServices = PaginateHelper.Paginate(services, pageToShow, url, pageSize);
+                return ResponseFactory.CreateSuccessResponse(201, paginateServices);
+            }
+
+            return ResponseFactory.CreateSuccessResponse(200, services);
+        }
         /// <summary>
         /// Obtiene la información de un servicio.
         /// </summary>
