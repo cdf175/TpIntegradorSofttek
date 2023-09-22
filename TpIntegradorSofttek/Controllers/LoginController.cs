@@ -29,11 +29,11 @@ namespace TpIntegradorSofttek.Controllers
         }
 
         /// <summary>
-        /// Inicia sesion para poder acceder a las distintas funcionalidades de la API.
+        /// Permite a los usuarios iniciar sesión proporcionando sus credenciales de acceso.
+        /// Cuando se autentica con éxito, se genera un token de autenticación que debe usarse para acceder a recursos protegidos.
         /// </summary>
         /// <param name="dto"> Email y Contraseña</param>
         /// <returns> Retorna un token. </returns>
-        /// <response code = "200" > Retorna un token. </response>
         [HttpPost]
         [ProducesResponseType(typeof(ApiSuccessResponse<UserLoginDto>), 200)]
         [ProducesResponseType(typeof(ApiErrorResponse), 401)]

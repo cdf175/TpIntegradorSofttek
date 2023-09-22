@@ -29,6 +29,7 @@ namespace TpIntegradorSofttek.Models
         public string Name { get; set; }
         public string? Address { get; set; }
         public ProyectState State { get; set; }
+        //campo para baja lógica
         [JsonIgnore]
         public DateTime? EndDate { get; set; }
 

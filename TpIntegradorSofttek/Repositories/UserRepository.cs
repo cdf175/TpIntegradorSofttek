@@ -23,7 +23,7 @@ namespace TpIntegradorSofttek.Repositories
 
         public override async Task<bool> Update(User updateUser)
         {
-            var user = await _context.Users.SingleOrDefaultAsync(p => p.Id == updateUser.Id);
+            var user = await _context.Users.SingleOrDefaultAsync(p => p.EndDate == null && p.Id == updateUser.Id);
 
             if(user == null) return false;
 

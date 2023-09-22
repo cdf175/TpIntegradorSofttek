@@ -4,6 +4,7 @@ namespace TpIntegradorSofttek.DTOs
 {
     public class WorkResponseDto
     {
+        public int Id { get; set; }
         public DateTime Date { get; set; }
         public int HourQuantity { get; set; }
         public decimal HourValue { get; set; }

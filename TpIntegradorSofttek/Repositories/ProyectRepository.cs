@@ -14,9 +14,9 @@ namespace TpIntegradorSofttek.Repositories
         {
             return await _context.Set<Proyect>().Where(p => p.EndDate == null).ToListAsync();
         }
-        public async Task<List<Proyect>> GetAll(ProyectFilterDto dtoFilter)
+        public async Task<List<Proyect>> GetAll(ProyectState state)
         {
-            return await _context.Set<Proyect>().Where(p => p.EndDate == null && p.State == dtoFilter.State).ToListAsync();
+            return await _context.Set<Proyect>().Where(p => p.EndDate == null && p.State == state).ToListAsync();
         }
 
         public override async Task<Proyect> GetById(int id)
@@ -27,7 +27,7 @@ namespace TpIntegradorSofttek.Repositories
 
         public override async Task<bool> Update(Proyect updateProyect)
         {
-            var proyect = await _context.Proyects.SingleOrDefaultAsync(p => p.Id == updateProyect.Id);
+            var proyect = await _context.Proyects.SingleOrDefaultAsync(p => p.EndDate == null && p.Id == updateProyect.Id);
 
             if (proyect == null) return false;
 

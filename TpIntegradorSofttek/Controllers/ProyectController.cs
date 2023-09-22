@@ -23,30 +23,28 @@ namespace TpIntegradorSofttek.Controllers
         }
 
         /// <summary>
-        /// Obtiene listado de todos los proyectos.
+        /// Obtiene listado de todos los proyectos. 
+        /// Si se ingresa un número de página se aplicará un paginado en la respuesta.
         /// </summary>
-        /// <returns>Retorna coleccion de proyectos.</returns>
-        /// <response code = "200" > Retorna una coleccion de proyectos.</response>
-        /// <response code = "201" > Retorna un paginado en caso de enviar número de pagina.</response>
+        /// <param name="page">Número de página</param>
+        /// <param name="pageSize">Cantidad de registros por página</param>
+        /// <returns>Retorna una lista de proyectos.</returns>
+        /// <response code = "200" >Retorna una lista de proyectos.</response>
+        /// <response code = "201" >Retorna un paginado en caso de enviar número de pagina.</response>
         [HttpGet]
         [Authorize(Policy = "Consult")]
-        [ProducesResponseType(typeof(ApiSuccessResponse<Proyect>), 200)]
+        [ProducesResponseType(typeof(ApiSuccessResponseList<Proyect>), 200)]
         [ProducesResponseType(typeof(PaginateDataDto<Proyect>), 201)]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll([FromQuery] int page, [FromQuery] int pageSize = 10)
         {
             var proyects = await _unityOfWork.ProyectRepository.GetAll();
 
             //Paginado
-            if (Request.Query.ContainsKey("page"))
+            if (page > 0)
             {
-                int pageToShow;
-                int pageSize = 10;
-                int.TryParse(Request.Query["page"], out pageToShow);
-                if (pageToShow < 1 ) return ResponseFactory.CreateErrorResponse(409, "'page' debe ser un número mayor o igual a 1.");
-                if (Request.Query.ContainsKey("pageSize")) int.TryParse(Request.Query["pageSize"], out pageSize);
                 if (pageSize < 1) return ResponseFactory.CreateErrorResponse(409, "'pageSize' debe ser un número mayor o igual a 1.");
                 var url = new Uri($"{Request.Scheme}://{Request.Host}{Request.Path}").ToString();
-                var paginateProyects = PaginateHelper.Paginate(proyects, pageToShow, url, pageSize);
+                var paginateProyects = PaginateHelper.Paginate(proyects, page, url, pageSize);
                 return ResponseFactory.CreateSuccessResponse(201, paginateProyects);
             }
 
@@ -55,56 +53,53 @@ namespace TpIntegradorSofttek.Controllers
 
         /// <summary>
         /// Obtiene listado de todos los proyectos filtrando por estado.
+        /// Si se ingresa un número de página se aplicará un paginado en la respuesta.
         /// </summary>
-        /// <param name="dtoFilter"> Estado </param>
+        /// <param name="page">Número de página</param>
+        /// <param name="pageSize">Cantidad de registros por página</param>
+        /// <param name="state">Estado: 1 – Pendiente, 2 – Confirmado, 3 – Terminado</param>
         /// <returns></returns>
-        [HttpGet]
+        /// <response code = "200" >Retorna una lista de proyectos.</response>
+        /// <response code = "201" >Retorna un paginado en caso de enviar número de pagina.</response>
+        /// <response code = "409" >Retorna error.</response>
+        [HttpGet("state/{state}")]
         [Authorize(Policy = "Consult")]
-        [Route("Filter")]
         [ProducesResponseType(typeof(ApiSuccessResponse<Proyect>), 200)]
         [ProducesResponseType(typeof(PaginateDataDto<Proyect>), 201)]
-        public async Task<IActionResult> GetAllFilter(ProyectFilterDto dtoFilter)
+        [ProducesResponseType(typeof(ApiErrorResponse), 409)]
+        public async Task<IActionResult> GetAllState(ProyectState state, [FromQuery] int page, [FromQuery] int pageSize = 10)
         {
-           
-            var proyects = await _unityOfWork.ProyectRepository.GetAll(dtoFilter);
+
+            var proyects = await _unityOfWork.ProyectRepository.GetAll(state);
 
             //Paginado
-            if (Request.Query.ContainsKey("page"))
+            if (page > 0)
             {
-                int pageToShow;
-                int pageSize = 10;
-                int.TryParse(Request.Query["page"], out pageToShow);
-                if (pageToShow < 1) return ResponseFactory.CreateErrorResponse(409, "'page' debe ser un número mayor o igual a 1.");
-                if (Request.Query.ContainsKey("pageSize")) int.TryParse(Request.Query["pageSize"], out pageSize);
                 if (pageSize < 1) return ResponseFactory.CreateErrorResponse(409, "'pageSize' debe ser un número mayor o igual a 1.");
                 var url = new Uri($"{Request.Scheme}://{Request.Host}{Request.Path}").ToString();
-                var paginateProyects = PaginateHelper.Paginate(proyects, pageToShow, url, pageSize);
+                var paginateProyects = PaginateHelper.Paginate(proyects, page, url, pageSize);
                 return ResponseFactory.CreateSuccessResponse(201, paginateProyects);
             }
 
             return ResponseFactory.CreateSuccessResponse(200, proyects);
+
+
         }
 
         /// <summary>
         /// Obtiene la información de un proyecto.
         /// </summary>
         /// <param name="id"> Código de proyecto.</param>
-        /// <returns>Retorna un objeto con la infomación del proyecto.</returns>
-        /// <response code = "200" > Retorna un objeto con la infomación del proyecto.</response>
+        /// <returns>Retorna la infomación de un proyecto.</returns>
+        /// <response code = "200" > Retorna la infomación de un proyecto.</response>
         [HttpGet("{id}")]
         [Authorize(Policy = "Consult")]
-        [ProducesResponseType(typeof(ApiSuccessResponse<ProyectDto>), 200)]
+        [ProducesResponseType(typeof(ApiSuccessResponse<Proyect>), 200)]
         public async Task<IActionResult> GetById(int id)
         {
             var proyect = await _unityOfWork.ProyectRepository.GetById(id);
-            var dto = new ProyectDto()
-            {
-                Name = proyect.Name,
-                Address = proyect.Address,
-                State = proyect.State,
-            };
 
-            return ResponseFactory.CreateSuccessResponse(200, dto);
+            return ResponseFactory.CreateSuccessResponse(200, proyect);
         }
 
         /// <summary>
@@ -123,7 +118,6 @@ namespace TpIntegradorSofttek.Controllers
 
             if (!await _unityOfWork.ProyectRepository.Insert(proyect))
                 return ResponseFactory.CreateErrorResponse(400, "No se pudo completar la operación.");
-
 
             await _unityOfWork.Complete();
 
