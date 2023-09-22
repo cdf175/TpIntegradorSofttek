@@ -1,4 +1,5 @@
-﻿using TpIntegradorSofttek.DTOs;
+﻿using System.Text.Json.Serialization;
+using TpIntegradorSofttek.DTOs;
 using TpIntegradorSofttek.Helpers;
 
 namespace TpIntegradorSofttek.Models
@@ -34,7 +35,10 @@ namespace TpIntegradorSofttek.Models
         public  int Dni { get; set; }
         public Roles Type { get; set; }
         public string Email { get; set; }
+        [JsonIgnore]
         public string Password { get; set; }
+        //campo para baja lógica
+        [JsonIgnore]
         public DateTime? EndDate { get; set; }
 
     }

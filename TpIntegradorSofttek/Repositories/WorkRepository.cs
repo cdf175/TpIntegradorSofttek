@@ -24,7 +24,7 @@ namespace TpIntegradorSofttek.Repositories
 
         public override async Task<bool> Update(Work updateWork)
         {
-            var work = await _context.Works.SingleOrDefaultAsync(p => p.Id == updateWork.Id);
+            var work = await _context.Works.SingleOrDefaultAsync(p => p.EndDate == null && p.Id == updateWork.Id);
 
             if (work == null) return false;
 
@@ -59,12 +59,13 @@ namespace TpIntegradorSofttek.Repositories
         public WorkResponseDto ConvertToResponseDto(Work work)
         {
             var dto = new WorkResponseDto();
+            dto.Id = work.Id;
             dto.Date = work.Date;
             dto.Proyect = work.Proyect;
             dto.Service = work.Service;
             dto.HourQuantity = work.HourQuantity;
             dto.HourValue = work.HourValue;
-            dto.Cost = work.Cost;
+            dto.Cost = work.HourValue * work.HourQuantity;
 
             return dto;
         }

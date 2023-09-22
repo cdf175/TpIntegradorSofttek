@@ -24,16 +24,18 @@ namespace TpIntegradorSofttek.Controllers
         }
 
         /// <summary>
-        /// Obtiene listado de todos los trabajos activos.
+        /// Obtiene listado de todos los trabajos.
         /// </summary>
-        /// <returns>Retorna coleccion de trabajos.</returns>
-        /// <response code = "200" > Retorna una coleccion de trabajos.</response>
+        ///  <param name="page">Número de página</param>
+        ///  <param name="pageSize">Cantidad de registros por página</param>
+        /// <returns>Retorna una lista de trabajos.</returns>
+        /// <response code = "200" > Retorna una lista de trabajos.</response>
         /// <response code = "201" > Retorna un paginado en caso de enviar número de pagina.</response>
         [HttpGet]
         [Authorize(Policy = "Consult")]
-        [ProducesResponseType(typeof(ApiSuccessResponse<WorkResponseDto>), 200)]
+        [ProducesResponseType(typeof(ApiSuccessResponseList<WorkResponseDto>), 200)]
         [ProducesResponseType(typeof(PaginateDataDto<WorkResponseDto>), 201)]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll([FromQuery] int page, [FromQuery] int pageSize = 10)
         {
             var works = await _unityOfWork.WorkRepository.GetAll();
 
@@ -45,14 +47,9 @@ namespace TpIntegradorSofttek.Controllers
             //Paginado
             if (Request.Query.ContainsKey("page"))
             {
-                int pageToShow = 1;
-                int pageSize = 10;
-                int.TryParse(Request.Query["page"], out pageToShow);
-                if (pageToShow < 1) return ResponseFactory.CreateErrorResponse(409, "'page' debe ser un número mayor o igual a 1.");
-                if (Request.Query.ContainsKey("pageSize")) int.TryParse(Request.Query["pageSize"], out pageSize);
                 if (pageSize < 1) return ResponseFactory.CreateErrorResponse(409, "'pageSize' debe ser un número mayor o igual a 1.");
                 var url = new Uri($"{Request.Scheme}://{Request.Host}{Request.Path}").ToString();
-                var paginateWorks = PaginateHelper.Paginate(WoksDto, pageToShow, url, pageSize);
+                var paginateWorks = PaginateHelper.Paginate(WoksDto, page, url, pageSize);
                 return ResponseFactory.CreateSuccessResponse(201, paginateWorks);
             }
 
@@ -62,9 +59,9 @@ namespace TpIntegradorSofttek.Controllers
         /// <summary>
         /// Obtiene la información de un trabajo.
         /// </summary>
-        /// <param name="id"> Código de trabajo.</param>
-        /// <returns>Retorna un objeto con la infomación del trabajo.</returns>
-        /// <response code = "200" > Retorna un objeto con la infomación del trabajo.</response>
+        /// <param name="id">Código de trabajo.</param>
+        /// <returns>Retorna la infomación de un trabajo.</returns>
+        /// <response code = "200" >Retorna la infomación de un trabajo.</response>
         [HttpGet("{id}")]
         [Authorize(Policy = "Consult")]
         [ProducesResponseType(typeof(ApiSuccessResponse<Work>), 200)]
@@ -74,6 +71,7 @@ namespace TpIntegradorSofttek.Controllers
 
             var dto = new WorkResponseDto()
             {
+                Id = id,
                 Date = work.Date,
                 Proyect = work.Proyect,
                 Service = work.Service,

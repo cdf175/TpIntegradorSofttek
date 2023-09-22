@@ -28,6 +28,7 @@ namespace TpIntegradorSofttek.Models
         public string Description { get; set; }
         public bool State { get; set; }
         public decimal HourValue { get; set; }
+        //campo para baja lógica
         [JsonIgnore]
         public DateTime? EndDate { get; set; }
 

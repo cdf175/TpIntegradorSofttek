@@ -15,9 +15,9 @@ namespace TpIntegradorSofttek.Repositories
             return await _context.Set<Service>().Where(p => p.EndDate == null).ToListAsync();
         }
 
-        public async Task<List<Service>> GetAll(ServiceFilterDto filterDto)
+        public async Task<List<Service>> GetAllActive()
         {
-            return await _context.Set<Service>().Where(p => p.EndDate == null && p.State == filterDto.State).ToListAsync();
+            return await _context.Set<Service>().Where(p => p.EndDate == null && p.State == true).ToListAsync();
         }
 
 
@@ -29,7 +29,7 @@ namespace TpIntegradorSofttek.Repositories
 
         public override async Task<bool> Update(Service updateService)
         {
-            var service = await _context.Services.SingleOrDefaultAsync(p => p.Id == updateService.Id);
+            var service = await _context.Services.SingleOrDefaultAsync(p => p.EndDate == null && p.Id == updateService.Id);
 
             if (service == null) return false;
 

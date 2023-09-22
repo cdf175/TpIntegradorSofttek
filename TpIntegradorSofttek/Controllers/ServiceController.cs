@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using TpIntegradorSofttek.DTOs;
 using TpIntegradorSofttek.Helpers;
 using TpIntegradorSofttek.Infrastructure;
@@ -26,29 +27,27 @@ namespace TpIntegradorSofttek.Controllers
 
         /// <summary>
         /// Obtiene listado de todos los servicios.
+        /// Si se ingresa un número de página se aplicará un paginado en la respuesta.
         /// </summary>
-        /// <returns>Retorna coleccion de servicios.</returns>
-        /// <response code = "200" > Retorna una coleccion de servicios.</response>
+        /// <returns>Retorna un listado de servicios.</returns>
+        /// <param name="page">Número de página</param>
+        /// <param name="pageSize">Cantidad de registros por página</param>
+        /// <response code = "200" > Retorna una lista de servicios.</response>
         /// <response code = "201" > Retorna un paginado en caso de enviar número de pagina.</response>
         [HttpGet]
         [Authorize(Policy = "Consult")]
-        [ProducesResponseType(typeof(ApiSuccessResponse<Service>), 200)]
+        [ProducesResponseType(typeof(ApiSuccessResponseList<Service>), 200)]
         [ProducesResponseType(typeof(PaginateDataDto<Service>), 201)]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll([FromQuery] int page, [FromQuery] int pageSize = 10)
         {
             var services = await _unityOfWork.ServiceRepository.GetAll();
 
             //Paginado
-            if (Request.Query.ContainsKey("page"))
+            if (page > 0)
             {
-                int pageToShow = 1;
-                int pageSize = 10;
-                int.TryParse(Request.Query["page"], out pageToShow);
-                if (pageToShow < 1) return ResponseFactory.CreateErrorResponse(409, "'page' debe ser un número mayor o igual a 1.");
-                if (Request.Query.ContainsKey("pageSize")) int.TryParse(Request.Query["pageSize"], out pageSize);
                 if (pageSize < 1) return ResponseFactory.CreateErrorResponse(409, "'pageSize' debe ser un número mayor o igual a 1.");
                 var url = new Uri($"{Request.Scheme}://{Request.Host}{Request.Path}").ToString();
-                var paginateServices = PaginateHelper.Paginate(services, pageToShow, url, pageSize);
+                var paginateServices = PaginateHelper.Paginate(services, page, url, pageSize);
                 return ResponseFactory.CreateSuccessResponse(201, paginateServices);
             }
 
@@ -56,30 +55,31 @@ namespace TpIntegradorSofttek.Controllers
         }
 
         /// <summary>
-        /// Obtiene listado de todos los servicios filtrandolo por el estado.
+        /// Obtiene listado de todos los servicios con estado activo.
+        /// Si se ingresa un número de página se aplicará un paginado en la respuesta.
         /// </summary>
-        /// <param name="dtoFilter"> Estado</param>
+        ///  <param name="page">Número de página</param>
+        ///  <param name="pageSize">Cantidad de registros por página</param>
         /// <returns></returns>
+        /// <response code = "200" > Retorna una lista de servicios activos.</response>
+        /// <response code = "201" > Retorna un paginado en caso de enviar número de pagina.</response>
+        /// <response code = "409" > Retorna error.</response>
         [HttpGet]
         [Authorize(Policy = "Consult")]
-        [Route("Filter")]
-        [ProducesResponseType(typeof(ApiSuccessResponse<Service>), 200)]
+        [Route("Active")]
+        [ProducesResponseType(typeof(ApiSuccessResponseList<Service>), 200)]
         [ProducesResponseType(typeof(PaginateDataDto<Service>), 201)]
-        public async Task<IActionResult> GetAllFilter(ServiceFilterDto dtoFilter)
+        [ProducesResponseType(typeof(ApiErrorResponse), 409)]
+        public async Task<IActionResult> GetAllActive([FromQuery] int page, [FromQuery] int pageSize = 10)
         {
-            var services = await _unityOfWork.ServiceRepository.GetAll(dtoFilter);
+            var services = await _unityOfWork.ServiceRepository.GetAllActive();
 
             //Paginado
-            if (Request.Query.ContainsKey("page"))
+            if (page > 0)
             {
-                int pageToShow = 1;
-                int pageSize = 10;
-                int.TryParse(Request.Query["page"], out pageToShow);
-                if (pageToShow < 1) return ResponseFactory.CreateErrorResponse(409, "'page' debe ser un número mayor o igual a 1.");
-                if (Request.Query.ContainsKey("pageSize")) int.TryParse(Request.Query["pageSize"], out pageSize);
                 if (pageSize < 1) return ResponseFactory.CreateErrorResponse(409, "'pageSize' debe ser un número mayor o igual a 1.");
                 var url = new Uri($"{Request.Scheme}://{Request.Host}{Request.Path}").ToString();
-                var paginateServices = PaginateHelper.Paginate(services, pageToShow, url, pageSize);
+                var paginateServices = PaginateHelper.Paginate(services, page, url, pageSize);
                 return ResponseFactory.CreateSuccessResponse(201, paginateServices);
             }
 
@@ -97,14 +97,8 @@ namespace TpIntegradorSofttek.Controllers
         public async Task<IActionResult> GetById(int id)
         {
             var service = await _unityOfWork.ServiceRepository.GetById(id);
-            var dto = new ServiceDto()
-            {
-                Description = service.Description,
-                State = service.State,
-                HourValue = service.HourValue
-            };
 
-            return ResponseFactory.CreateSuccessResponse(200, dto);
+            return ResponseFactory.CreateSuccessResponse(200, service);
         }
 
         /// <summary>

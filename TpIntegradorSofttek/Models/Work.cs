@@ -1,4 +1,5 @@
-﻿using TpIntegradorSofttek.DTOs;
+﻿using System.Text.Json.Serialization;
+using TpIntegradorSofttek.DTOs;
 
 namespace TpIntegradorSofttek.Models
 {
@@ -33,6 +34,8 @@ namespace TpIntegradorSofttek.Models
         public int HourQuantity { get; set; }
         public decimal HourValue { get; set; }
         public Decimal Cost { get ; set; }
+        //campo para baja lógica
+        [JsonIgnore]
         public DateTime? EndDate { get; set; }
         public virtual Proyect Proyect { get; set; }
         public virtual Service Service { get; set; }
