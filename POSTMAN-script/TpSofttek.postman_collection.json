@@ -1,0 +1,821 @@
+{
+	"info": {
+		"_postman_id": "8ace0d00-48e3-4aad-bccf-1752de4430e4",
+		"name": "TpSofttek",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "15888319"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"item": [
+				{
+					"name": "LoginAdministrador",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"admin@gmail.com\",\r\n  \"password\": \"1234\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7238/api/Login",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7238",
+							"path": [
+								"api",
+								"Login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "LoginConsultor",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"test@gmail.com\",\r\n  \"password\": \"1234\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7238/api/Login",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7238",
+							"path": [
+								"api",
+								"Login"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Endpoint de login para obtener el token de autorización.",
+			"auth": {
+				"type": "noauth"
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "UserGetAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7238/api/user",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7238",
+							"path": [
+								"api",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UserPaginated",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7238/api/user?page=1&pageSize=5",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7238",
+							"path": [
+								"api",
+								"user"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "pageSize",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UserGetById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7238/api/user/1",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7238",
+							"path": [
+								"api",
+								"user",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UserCreate",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"prueba60\",\r\n    \"dni\": 35566,\r\n    \"type\": 1,\r\n    \"email\": \"pp60@gmail.com\",\r\n    \"password\": \"1234\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7238/api/user/create",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7238",
+							"path": [
+								"api",
+								"user",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UserUpdate",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Testnuevo2\",\r\n    \"dni\": 1234,\r\n    \"type\": 2,\r\n    \"email\": \"testnuevo2@gmail.com\",\r\n    \"password\": \"1234\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7238/api/user/update/5",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7238",
+							"path": [
+								"api",
+								"user",
+								"update",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UserDelete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7238/api/user/delete/13",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7238",
+							"path": [
+								"api",
+								"user",
+								"delete",
+								"13"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Endpoints de consulta hacia el usuario. Requiere autorización por token."
+		},
+		{
+			"name": "Proyect",
+			"item": [
+				{
+					"name": "ProyectGetAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7238/api/proyect",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7238",
+							"path": [
+								"api",
+								"proyect"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ProyectPaginated",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7238/api/proyect?page=2&pageSize=1",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7238",
+							"path": [
+								"api",
+								"proyect"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "2"
+								},
+								{
+									"key": "pageSize",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ProyectGetById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7238/api/proyect/1",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7238",
+							"path": [
+								"api",
+								"proyect",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ProyectGetAllState",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7238/api/proyect/state/2",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7238",
+							"path": [
+								"api",
+								"proyect",
+								"state",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ProyectCreate",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"charco negro\",\r\n  \"address\": \"Neuquén\",\r\n  \"state\": 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7238/api/proyect/create",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7238",
+							"path": [
+								"api",
+								"proyect",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ProyectUpdate",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Vaca Muerta\",\r\n  \"address\": \"calle rural 6 , Mariano Moreno, Neuquén Si\",\r\n  \"state\": 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7238/api/proyect/update/3",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7238",
+							"path": [
+								"api",
+								"proyect",
+								"update",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ProyectDelete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7238/api/proyect/delete/4",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7238",
+							"path": [
+								"api",
+								"proyect",
+								"delete",
+								"4"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Endpoints de consulta hacia Proyectos. Requiere autorización por token."
+		},
+		{
+			"name": "Service",
+			"item": [
+				{
+					"name": "ServiceGetAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7238/api/service",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7238",
+							"path": [
+								"api",
+								"service"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ServicePaginated",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7238/api/service?page=1&pageSize=1",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7238",
+							"path": [
+								"api",
+								"service"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "pageSize",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ServiveGetById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7238/api/service/1",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7238",
+							"path": [
+								"api",
+								"service",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ServiceGetAllActive",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7238/api/service/active",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7238",
+							"path": [
+								"api",
+								"service",
+								"active"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ServiceCreate",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"description\": \"Generar combustible\",\r\n  \"state\": true,\r\n  \"hourValue\": 5630.23\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7238/api/service/create",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7238",
+							"path": [
+								"api",
+								"service",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ServiceUpdate",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"description\": \"Lubricantes\",\r\n  \"state\": false,\r\n  \"hourValue\": 4000.9\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7238/api/service/update/3",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7238",
+							"path": [
+								"api",
+								"service",
+								"update",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ServiceDelete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7238/api/service/delete/4",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7238",
+							"path": [
+								"api",
+								"service",
+								"delete",
+								"4"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Endpoints de consulta hacia Servicios. Requiere autorización por token."
+		},
+		{
+			"name": "Work",
+			"item": [
+				{
+					"name": "WorkGetAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7238/api/work",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7238",
+							"path": [
+								"api",
+								"work"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "WorkPaginated",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7238/api/work?page=1&pageSize=1",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7238",
+							"path": [
+								"api",
+								"work"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "pageSize",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "WorkGetById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7238/api/work/1",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7238",
+							"path": [
+								"api",
+								"work",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "WorkCreate",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"date\": \"2023-09-10\",\r\n  \"proyectId\": 1,\r\n  \"serviceId\": 1,\r\n  \"hourQuantity\": 200,\r\n  \"hourValue\": 1500\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7238/api/work/create",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7238",
+							"path": [
+								"api",
+								"work",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "WorkUpdate",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"date\": \"2023-09-19T15:33:08.965Z\",\r\n  \"proyectId\": 1,\r\n  \"serviceId\": 1,\r\n  \"hourQuantity\": 300,\r\n  \"hourValue\": 3000.5\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7238/api/work/update/5",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7238",
+							"path": [
+								"api",
+								"work",
+								"update",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "WorkDelete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7238/api/work/delete/6",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7238",
+							"path": [
+								"api",
+								"work",
+								"delete",
+								"6"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Endpoints de consulta hacia Trabajos. Requiere autorización por token."
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{TokenConsultor}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "TokenAdministrador",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ3ZWJBcGlTdWJqZWN0IiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvZW1haWxhZGRyZXNzIjoiYWRtaW5AZ21haWwuY29tIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZWlkZW50aWZpZXIiOiIxIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiMSIsImV4cCI6MTY5ODAxODExMX0.YsWhzimlfBJM7AGJ4pUIWpC0IuqRvz11reCqL3Wpd5A"
+		},
+		{
+			"key": "TokenConsultor",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ3ZWJBcGlTdWJqZWN0IiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvZW1haWxhZGRyZXNzIjoidGVzdEBnbWFpbC5jb20iLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjIiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiIyIiwiZXhwIjoxNjk4MDE4NjE1fQ.mT8vIzuSG4ZQGabvSP6wMsnJJOxaXslf8wFhvrBIsGw",
+			"type": "string"
+		}
+	]
+}

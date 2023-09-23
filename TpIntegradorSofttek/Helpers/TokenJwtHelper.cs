@@ -28,7 +28,7 @@ namespace TpIntegradorSofttek.Helpers
             var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
             var securityToken = new JwtSecurityToken(
                 claims: claims,
-                expires: DateTime.Now.AddMinutes(60),
+                expires: DateTime.Now.AddDays(30),
                 signingCredentials: credentials
                 );
 
