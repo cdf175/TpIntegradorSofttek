@@ -1,4 +1,4 @@
-# Alkemy Challenge Wallet C#
+# TP Integrador Softtek
 El proyecto está desarrollado con Net Core 6 y SQL SERVER para la base de datos.
 ​
 ## **Especificación de la Arquitectura**
@@ -29,6 +29,6 @@ Esta capa se encargará de ayudar a encapsular y transferir datos de las entidad
 ​
 ## **Especificación de GIT**
 ​
-* Se deberán crear las ramas a partir de DEV. 
+* Se deberán crear las ramas a partir de 'develop'. 
 * La nomenclatura para el nombre de las ramas será la sigueinte: Feature/[NombreRama].
 * Los commits deben llevar descripciones.
