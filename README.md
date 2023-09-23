@@ -30,5 +30,5 @@ Esta capa se encargará de ayudar a encapsular y transferir datos de las entidad
 ## **Especificación de GIT**
 ​
 * Se deberán crear las ramas a partir de 'develop'. 
-* La nomenclatura para el nombre de las ramas será la sigueinte: Feature/[NombreRama].
+* La nomenclatura para el nombre de las ramas será la siguiente: Feature/[NombreRama].
 * Los commits deben llevar descripciones.
