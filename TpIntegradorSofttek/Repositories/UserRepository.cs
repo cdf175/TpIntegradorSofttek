@@ -31,7 +31,10 @@ namespace TpIntegradorSofttek.Repositories
             user.Email = updateUser.Email;
             user.Dni = updateUser.Dni;
             user.Type = updateUser.Type;
-            user.Password = updateUser.Password;
+            if (PasswordEncryptHelper.EncriptPassword(null) != updateUser.Password)
+            {
+                user.Password = updateUser.Password;
+            }
 
             _context.Update(user);
 

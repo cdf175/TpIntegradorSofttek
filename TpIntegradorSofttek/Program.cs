@@ -10,7 +10,15 @@ using Microsoft.OpenApi.Models;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
+var allowSpecificOrigins = "";
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: allowSpecificOrigins, policy =>
+    {
+        policy.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
+    });
+});
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -89,6 +97,8 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 
 app.UseAuthorization();
+
+app.UseCors(allowSpecificOrigins);
 
 app.MapControllers();
 

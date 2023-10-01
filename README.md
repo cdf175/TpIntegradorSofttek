@@ -1,6 +1,11 @@
 # TP Integrador Softtek
 El proyecto está desarrollado con Net Core 6 y SQL SERVER para la base de datos.
 ​
+## **Para iniciar**
+Una vez descargado del github abrir con visual studio, cambiar ubicación del archivo de documentación : en el explorador de soluciones click derecho en el proyecto->Propiedades->Aplicacion->General->Salida->Ruta de acceso del archivo de documantación XML.
+
+Agregar appsettings.json siguiendo el ejemplo del archivo appsettings.json.example.
+
 ## **Especificación de la Arquitectura**
 ​
 ### **Capa Controller**
